@@ -35,9 +35,20 @@ public class BankService {
         return "Success";
     }
 
-    public void validateStockAvailability(String stockName) {
+    public void removeStock(String stockName) {
         BankPosition bankPosition = bankRepository.findById(stockName).orElseThrow(StockNotFoundException::new);
 
         if (bankPosition.getQuantity() <= 0) throw new OutOfStockException();
+
+        bankPosition.setQuantity(bankPosition.getQuantity() - 1);
+        bankRepository.save(bankPosition);
     }
+
+    public void addStock(String stockName) {
+        BankPosition bankPosition = bankRepository.findById(stockName).orElseThrow(StockNotFoundException::new);
+
+        bankPosition.setQuantity(bankPosition.getQuantity() + 1);
+        bankRepository.save(bankPosition);
+    }
+
 }

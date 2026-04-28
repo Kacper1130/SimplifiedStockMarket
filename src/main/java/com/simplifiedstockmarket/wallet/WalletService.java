@@ -1,13 +1,13 @@
 package com.simplifiedstockmarket.wallet;
 
 import com.simplifiedstockmarket.common.StockPositionDto;
+import com.simplifiedstockmarket.exception.StockNotOwnedException;
 import com.simplifiedstockmarket.exception.WalletNotFoundException;
 import com.simplifiedstockmarket.wallet.dto.WalletStateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -15,7 +15,7 @@ public class WalletService {
 
     private final WalletRepository walletRepository;
 
-    public WalletStateDto getWallet(UUID walletId) {
+    public WalletStateDto getWallet(String walletId) {
         Wallet wallet = walletRepository.findById(walletId).orElseThrow(WalletNotFoundException::new);
 
         List<StockPositionDto> stockList = wallet.getStocks().entrySet()
@@ -26,21 +26,43 @@ public class WalletService {
         return new WalletStateDto(wallet.getId(), stockList);
     }
 
-    public Integer getStockQuantity(UUID walletId, String stockName) {
+    public Integer getStockQuantity(String walletId, String stockName) {
         Wallet wallet = walletRepository.findById(walletId).orElseThrow(WalletNotFoundException::new);
 
         return wallet.getStocks().get(stockName); //TODO co jak nie ma takiej akcji
     }
 
-    public void validateStockAvailability(UUID walletId, String stockName) {
-        Wallet wallet = walletRepository.findById(walletId).orElseGet(() -> {
+    public void ensureWalletExists(String walletId) {
+        if (!walletRepository.existsById(walletId)) {
             Wallet newWallet = new Wallet();
             newWallet.setId(walletId);
-            return walletRepository.save(newWallet);
-        });
-
-        int quantity = wallet.getStocks().getOrDefault(stockName, 0);
-
-        if (quantity <= 0) throw new
+            walletRepository.save(newWallet);
+        }
     }
+
+    public void removeStock(String walletId, String stockName) {
+        Wallet wallet = walletRepository.findById(walletId).orElseThrow(() -> new IllegalStateException("Wallet not found"));
+
+        Integer stockQuantity = wallet.getStocks().get(stockName);
+        if (stockQuantity == null || stockQuantity <= 0) throw new StockNotOwnedException();
+
+        int newQuantity = stockQuantity -1;
+        if (newQuantity == 0) {
+            wallet.getStocks().remove(stockName);
+        } else {
+            wallet.getStocks().put(stockName, newQuantity);
+        }
+
+        walletRepository.save(wallet);
+    }
+
+    public void addStock(String walletId, String stockName) {
+        Wallet wallet = walletRepository.findById(walletId).orElseThrow(() -> new IllegalStateException("Wallet not found"));
+
+        int currentQuantity = wallet.getStocks().getOrDefault(stockName, 0);
+        wallet.getStocks().put(stockName, currentQuantity + 1);
+
+        walletRepository.save(wallet);
+    }
+
 }

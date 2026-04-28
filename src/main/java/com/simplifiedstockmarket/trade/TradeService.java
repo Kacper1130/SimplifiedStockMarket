@@ -7,8 +7,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
 class TradeService {
@@ -17,20 +15,22 @@ class TradeService {
     private final WalletService walletService;
 
     @Transactional
-    public void handleStockOperation(UUID walletId, String stockName, StockOperation type) {
-        //todo sprawdzenie czy portfel istnieje i ewentualnie stworzyc
+    public void handleStockOperation(String walletId, String stockName, StockOperation type) {
+        walletService.ensureWalletExists(walletId);
         switch (type.type()) {
             case SELL -> handleSellOperation(walletId, stockName);
             case BUY -> handleBuyOperation(walletId, stockName);
         }
     }
 
-    private void handleSellOperation(UUID walletId, String stockName) {
-        walletService.validateStockAvailability(walletId, stockName);
+    private void handleSellOperation(String walletId, String stockName) {
+        walletService.removeStock(walletId, stockName);
+        bankService.addStock(stockName);
     }
 
-    private void handleBuyOperation(UUID walletId, String stockName) {
-        bankService.validateStockAvailability(stockName);
+    private void handleBuyOperation(String walletId, String stockName) {
+        bankService.removeStock(stockName);
+        walletService.addStock(walletId, stockName);
     }
 
 }
