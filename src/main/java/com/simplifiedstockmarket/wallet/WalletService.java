@@ -29,7 +29,7 @@ public class WalletService {
     public Integer getStockQuantity(String walletId, String stockName) {
         Wallet wallet = walletRepository.findById(walletId).orElseThrow(WalletNotFoundException::new);
 
-        return wallet.getStocks().get(stockName); //TODO co jak nie ma takiej akcji
+        return wallet.getStocks().getOrDefault(stockName, 0);
     }
 
     public void ensureWalletExists(String walletId) {

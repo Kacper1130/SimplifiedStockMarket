@@ -15,10 +15,8 @@ class TradeController {
     private final TradeService tradeService;
 
     @PostMapping("/wallets/{wallet_id}/stocks/{stock_name}")
-    public ResponseEntity<?> handeStockOperation(@PathVariable("wallet_id") String walletId, @PathVariable("stock_name") String stockName, @RequestBody StockOperation type) { //TODO zmiana typu zwracanego
-
+    public ResponseEntity<Void> handeStockOperation(@PathVariable("wallet_id") String walletId, @PathVariable("stock_name") String stockName, @RequestBody StockOperation type) {
         tradeService.handleStockOperation(walletId, stockName, type);
-
         return ResponseEntity.ok().build();
     }
 

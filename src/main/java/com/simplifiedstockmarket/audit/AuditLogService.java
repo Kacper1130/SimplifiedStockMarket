@@ -16,7 +16,7 @@ public class AuditLogService {
 
     public AuditLogResponse getAuditLogs() {
         List<AuditLog> logs = auditLogRepository.findAllByOrderByCreatedAtAsc();
-        return new AuditLogResponse(
+        return new AuditLogResponse(//TODO change to JPQL?
                 logs.stream()
                         .map(auditLog -> new AuditLogDto(auditLog.getType(), auditLog.getWalletId(), auditLog.getStockName()))
                         .toList());

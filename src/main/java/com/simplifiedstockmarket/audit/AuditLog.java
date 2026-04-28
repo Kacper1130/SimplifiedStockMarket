@@ -21,7 +21,7 @@ public class AuditLog {
     private StockOperationType type;
     private String walletId;
     private String stockName;
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private final LocalDateTime createdAt = LocalDateTime.now();
 
     public AuditLog(StockOperationType type, String walletId, String stockName) {
         this.type = type;

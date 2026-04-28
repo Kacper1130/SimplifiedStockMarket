@@ -18,8 +18,9 @@ class BankController {
     }
 
     @PostMapping
-    public ResponseEntity<?> setBankState(@RequestBody BankStateDto bankState) {
-        return ResponseEntity.ok(bankService.setBankState(bankState));
+    public ResponseEntity<Void> setBankState(@RequestBody BankStateDto bankState) {
+        bankService.setBankState(bankState);
+        return ResponseEntity.ok().build();
     }
 
 }

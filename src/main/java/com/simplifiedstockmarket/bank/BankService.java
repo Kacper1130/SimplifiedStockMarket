@@ -23,7 +23,7 @@ public class BankService {
         );
     }
 
-    public String setBankState(BankStateDto bankStateDto) { //TODO cos innego powinna zwracac
+    public void setBankState(BankStateDto bankStateDto) {
         bankRepository.deleteAll();
 
         List<BankPosition> entities = bankStateDto.stocks().stream()
@@ -31,8 +31,6 @@ public class BankService {
                 .toList();
 
         bankRepository.saveAll(entities);
-
-        return "Success";
     }
 
     public void removeStock(String stockName) {
