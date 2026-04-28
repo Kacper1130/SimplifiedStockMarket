@@ -5,11 +5,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
-class AuditLog {
+@Getter
+@NoArgsConstructor
+public class AuditLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +21,12 @@ class AuditLog {
     private StockOperationType type;
     private String walletId;
     private String stockName;
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    public AuditLog(StockOperationType type, String walletId, String stockName) {
+        this.type = type;
+        this.walletId = walletId;
+        this.stockName = stockName;
+    }
 
 }
