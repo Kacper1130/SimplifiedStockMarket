@@ -22,6 +22,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SERVER_SHUTDOWN=immediate
     depends_on:
       postgres:
         condition: service_healthy
