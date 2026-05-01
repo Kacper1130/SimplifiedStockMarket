@@ -1,4 +1,4 @@
-package com.simplifiedstockmarket;
+package com.simplifiedstockmarket.trade.dto;
 
 import com.simplifiedstockmarket.common.StockOperationType;
 

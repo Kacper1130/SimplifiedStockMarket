@@ -1,8 +1,8 @@
 package com.simplifiedstockmarket.trade;
 
-import com.simplifiedstockmarket.StockOperation;
 import com.simplifiedstockmarket.audit.AuditLogService;
 import com.simplifiedstockmarket.bank.BankService;
+import com.simplifiedstockmarket.trade.dto.StockOperation;
 import com.simplifiedstockmarket.wallet.WalletService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

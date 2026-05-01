@@ -1,6 +1,6 @@
 package com.simplifiedstockmarket.trade;
 
-import com.simplifiedstockmarket.StockOperation;
+import com.simplifiedstockmarket.trade.dto.StockOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
