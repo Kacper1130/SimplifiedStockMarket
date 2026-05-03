@@ -37,12 +37,16 @@ This will:
 
 The application will be available at `http://localhost:<port>`.
 
-## Running Tests
-
 Tests are run separately from the application startup. Docker must be running (required by Testcontainers).
 
+**Linux/macOS:**
 ```bash
 ./mvnw test
+```
+
+**Windows:**
+```cmd
+mvnw.cmd test
 ```
 
 ## API Endpoints
