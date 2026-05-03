@@ -37,6 +37,10 @@ This will:
 
 The application will be available at `http://localhost:<port>`.
 
+> **Note:** After starting the application, nginx may return `502` for the first 10-20 seconds while Spring Boot instances are initializing.
+
+## Running Tests
+
 Tests are run separately from the application startup. Docker must be running (required by Testcontainers).
 
 **Linux/macOS:**
