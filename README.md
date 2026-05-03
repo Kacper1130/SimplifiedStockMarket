@@ -7,6 +7,15 @@ A REST API simulating a simplified stock market with wallets, a bank, and an aud
 - Docker
 - Java 21 (for running tests)
 - Maven (for running tests)
+- 
+
+## Getting Started
+
+Clone the repository:
+```bash
+git clone https://github.com/Kacper1130/SimplifiedStockMarket
+cd SimplifiedStockMarket
+```
 
 ## Running the Application
 
@@ -162,7 +171,7 @@ Kills the instance that serves this request. The application remains available b
 - **2 application instances** run behind an nginx load balancer
 - **PostgreSQL** is used as shared state between instances — wallet, bank, and audit log data is persisted in the database
 - Killing one instance via `POST /chaos` does not affect availability — nginx routes traffic to the remaining instance
-- Docker Compose restarts killed instances automatically (`restart` policy is not explicitly set, but replicas ensure redundancy)
+- Two replicas ensure redundancy — if one instance is killed, the other continues serving traffic
 
 ## Design Decisions
 
