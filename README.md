@@ -157,17 +157,7 @@ Kills the instance that serves this request. The application remains available b
 
 ## Architecture
 
-```
-client
-  │
-  ▼
-nginx (load balancer, port XXXX)
-  ├── app instance 1
-  └── app instance 2
-         │
-         ▼
-      PostgreSQL
-```
+![Architecture](docs/architecture.png)
 
 - **2 application instances** run behind an nginx load balancer
 - **PostgreSQL** is used as shared state between instances — wallet, bank, and audit log data is persisted in the database
