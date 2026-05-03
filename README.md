@@ -7,7 +7,6 @@ A REST API simulating a simplified stock market with wallets, a bank, and an aud
 - Docker
 - Java 21 (for running tests)
 - Maven (for running tests)
-- 
 
 ## Getting Started
 
