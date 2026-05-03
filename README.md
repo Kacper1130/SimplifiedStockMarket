@@ -165,7 +165,7 @@ Response:
 
 **POST** `/chaos`
 
-Kills the instance that serves this request. The application remains available because other instances continue serving traffic.
+Kills the instance that serves this request. The client will not receive an HTTP response — the connection is dropped as the JVM exits immediately via `System.exit(1)`. The application remains available because nginx routes subsequent requests to the remaining instance.
 
 ## Architecture
 
